@@ -1,11 +1,17 @@
 package main
 
 import (
+	"errors"
+	"strings"
 	"sync"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/time/rate"
+)
+
+var (
+	ErrKeyNotProvided = errors.New("Authorization key must be provided")
 )
 
 func (app *application) rateLimit() gin.HandlerFunc {
@@ -54,6 +60,25 @@ func (app *application) rateLimit() gin.HandlerFunc {
 		}
 
 		mu.Unlock()
+
+		ctx.Next()
+	}
+}
+
+func (app *application) authenticate() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		header := ctx.GetHeader("Authorization")
+
+		split := strings.Split(header, " ")
+		if len(split) != 2 || len(split[1]) == 0 {
+			app.badRequestResponse(ctx, ErrKeyNotProvided)
+			return
+		}
+
+		if split[1] != app.config.authKey {
+			app.invalidTokenResponse(ctx)
+			return
+		}
 
 		ctx.Next()
 	}

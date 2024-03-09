@@ -11,6 +11,8 @@ func (app *application) routes() *gin.Engine {
 		router.Use(app.rateLimit())
 	}
 
+	router.Use(app.authenticate())
+
 	router.HandleMethodNotAllowed = true
 	router.NoMethod(app.methodNotAllowedResponse)
 	router.NoRoute(app.notFoundResponse)

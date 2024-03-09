@@ -8,4 +8,4 @@ include .envrc
 ## run/api: run the cmd/auth application
 .PHONY: run/api
 run/api:
-	go run ./cmd/api -limiter-enabled
+	go run ./cmd/api -limiter-enabled -auth-key=${AUTH_KEY}

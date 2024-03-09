@@ -49,3 +49,8 @@ func (app *application) rateLimitExceededResponse(ctx *gin.Context) {
 	message := "rate limit exceeded"
 	app.errorResponse(ctx, http.StatusTooManyRequests, message)
 }
+
+func (app *application) invalidTokenResponse(ctx *gin.Context) {
+	message := "the token provided is not valid"
+	app.errorResponse(ctx, http.StatusUnauthorized, message)
+}

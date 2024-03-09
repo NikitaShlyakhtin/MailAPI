@@ -15,6 +15,7 @@ type config struct {
 		burst   int
 		enabled bool
 	}
+	authKey string
 }
 
 type application struct {
@@ -27,6 +28,8 @@ func main() {
 
 	flag.IntVar(&cfg.port, "port", 4000, "API server port")
 	flag.StringVar(&cfg.env, "mode", "debug", "Mode (debug|release)")
+
+	flag.StringVar(&cfg.authKey, "auth-key", "", "Authentication key")
 
 	flag.Float64Var(&cfg.limiter.rps, "limiter-rps", 2, "Rate limiter maximum requests per second")
 	flag.IntVar(&cfg.limiter.burst, "limiter-burst", 4, "Rate limiter burst")

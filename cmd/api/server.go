@@ -42,6 +42,7 @@ func (app *application) serve() error {
 			"addr": srv.Addr,
 		})
 
+		app.wg.Wait()
 		shutdownError <- nil
 	}()
 

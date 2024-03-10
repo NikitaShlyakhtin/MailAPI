@@ -17,7 +17,7 @@ func (app *application) routes() *gin.Engine {
 	router.NoMethod(app.methodNotAllowedResponse)
 	router.NoRoute(app.notFoundResponse)
 
-	router.POST("/email", app.sendEmailHandler)
+	router.POST("/send-email", app.sendEmailHandler)
 
 	return router
 }
